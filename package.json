@@ -1,0 +1,27 @@
+{
+  "name": "editor-pdf-master",
+  "version": "1.0.0",
+  "description": "Uma aplicação web completa para edição, conversão e gerenciamento de arquivos PDF",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pdf",
+    "editor",
+    "converter",
+    "web-app"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "jspdf": "^2.5.1",
+    "file-saver": "^2.0.5",
+    "mammoth": "^1.6.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
