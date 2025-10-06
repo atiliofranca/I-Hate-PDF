@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor de PDF Master</title>
+    <title>I Hate PDF</title>
     <link rel="stylesheet" href="src/css/light-theme.css" id="theme-stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -12,13 +12,12 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div class="logo-container">
-                    <img src="i-hate-pdf.png" alt="Editor de PDF Master" class="logo">
-                    <h1 class="app-title">Editor de PDF Master</h1>
+                <div class="logo-container" style="cursor: pointer;">
+                    <div class="logo">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h1 class="app-title">I Hate PDF</h1>
                 </div>
-                <button class="sidebar-toggle" id="sidebar-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
             
             <nav class="sidebar-nav">
@@ -80,6 +79,7 @@
                         </button>
                         <ul class="submenu">
                             <li><a href="#" data-functionality="comprimirPDF"><i class="fas fa-file-archive"></i> Comprimir PDF</a></li>
+                            <li><a href="#" data-functionality="compararPDF"><i class="fas fa-balance-scale"></i> Comparar PDF</a></li>
                         </ul>
                     </li>
                     
@@ -94,14 +94,6 @@
                             <li><a href="#" data-functionality="protegerPDF"><i class="fas fa-lock"></i> Proteger PDF</a></li>
                             <li><a href="#" data-functionality="desbloquearPDF"><i class="fas fa-unlock"></i> Desbloquear PDF</a></li>
                         </ul>
-                    </li>
-                    
-                    <!-- Outros -->
-                    <li class="menu-item single">
-                        <a href="#" data-functionality="compararPDF">
-                            <i class="fas fa-balance-scale"></i>
-                            <span>Comparar PDF</span>
-                        </a>
                     </li>
                 </ul>
             </nav>
@@ -121,8 +113,8 @@
                 <!-- Welcome Screen -->
                 <div class="welcome-screen" id="welcome-screen">
                     <div class="welcome-content">
-                        <img src="i-hate-pdf.png" alt="Editor de PDF Master" class="welcome-logo">
-                        <h2>Bem-vindo ao Editor de PDF Master</h2>
+                        <img src="i-hate-pdf.png" alt="I Hate PDF">
+                        <h2>Bem-vindo ao I Hate PDF</h2>
                         <p>Uma solução completa para edição, conversão e gerenciamento de arquivos PDF.</p>
                         <p>Selecione uma funcionalidade no menu lateral para começar.</p>
                     </div>

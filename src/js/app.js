@@ -1,29 +1,50 @@
-// Editor de PDF Master - Aplicação Principal
+// I Hate PDF - Aplicação Principal
 class PDFMasterApp {
     constructor() {
         this.currentTheme = 'light';
         this.currentFunctionality = null;
-        this.sidebarCollapsed = false;
         this.isMobile = window.innerWidth <= 768;
         
         this.init();
     }
 
     init() {
+        // Wait for DOM to be fully loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.initializeApp();
+            });
+        } else {
+            this.initializeApp();
+        }
+    }
+
+    initializeApp() {
         this.setupEventListeners();
         this.setupResponsiveHandling();
         this.loadThemePreference();
         this.setupSidebar();
+        
+        console.log('I Hate PDF App inicializado com sucesso');
     }
 
     setupEventListeners() {
         // Theme toggle
         const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', () => this.toggleTheme());
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
 
-        // Sidebar toggle
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        sidebarToggle.addEventListener('click', () => this.toggleSidebar());
+        // Sidebar toggle removido
+
+        // Logo home button
+        const logoContainer = document.querySelector('.logo-container');
+        if (logoContainer) {
+            logoContainer.addEventListener('click', () => {
+                console.log('Logo clicado via addEventListener');
+                this.goToHome();
+            });
+        }
 
         // Menu navigation
         this.setupMenuNavigation();
@@ -449,15 +470,36 @@ class PDFMasterApp {
         }
     }
 
-    toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
+    // toggleSidebar removido - sidebar sempre expandida
+
+    goToHome() {
+        // Remove active state from all menu items
+        document.querySelectorAll('[data-functionality]').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
         
-        if (this.isMobile) {
-            sidebar.classList.toggle('open');
-        } else {
-            sidebar.classList.toggle('collapsed');
-            this.sidebarCollapsed = !this.sidebarCollapsed;
+        // Show welcome screen and hide functionality content
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const functionalityContent = document.getElementById('functionality-content');
+        
+        if (welcomeScreen) {
+            welcomeScreen.style.display = 'flex';
+            console.log('Mostrando tela de boas-vindas');
         }
+        
+        if (functionalityContent) {
+            functionalityContent.style.display = 'none';
+            console.log('Ocultando conteúdo de funcionalidade');
+        }
+        
+        // Reset current functionality
+        this.currentFunctionality = null;
+        
+        // Close sidebar on mobile
+        if (this.isMobile) {
+            this.closeMobileSidebar();
+        }
+        
+        console.log('Função goToHome() executada com sucesso');
     }
 
     closeMobileSidebar() {
@@ -472,8 +514,7 @@ class PDFMasterApp {
         
         if (wasMobile !== this.isMobile) {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.remove('open', 'collapsed');
-            this.sidebarCollapsed = false;
+            sidebar.classList.remove('open');
         }
     }
 
@@ -658,3 +699,46 @@ async function simulateProcessing(functionalityId) {
 
 // Initialize the application
 const app = new PDFMasterApp();
+
+// Global function for going to home (accessible from HTML onclick)
+window.goToHome = function() {
+    console.log('goToHome() chamada');
+    
+    try {
+        // Remove active states from all menu items
+        const functionalityLinks = document.querySelectorAll('[data-functionality]');
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        functionalityLinks.forEach(l => l.classList.remove('active'));
+        menuItems.forEach(item => item.classList.remove('active'));
+        
+        // Show welcome screen and hide functionality content
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const functionalityContent = document.getElementById('functionality-content');
+        
+        if (welcomeScreen) {
+            welcomeScreen.style.display = 'flex';
+            console.log('Welcome screen mostrado');
+        } else {
+            console.error('Elemento welcome-screen não encontrado');
+        }
+        
+        if (functionalityContent) {
+            functionalityContent.style.display = 'none';
+            console.log('Functionality content ocultado');
+        }
+        
+        // Close sidebar on mobile if needed
+        if (window.innerWidth <= 768) {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.remove('open');
+            }
+        }
+        
+        console.log('Função goToHome() executada com sucesso');
+        
+    } catch (error) {
+        console.error('Erro na função goToHome():', error);
+    }
+};

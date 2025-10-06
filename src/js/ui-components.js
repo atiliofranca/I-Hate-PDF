@@ -1,4 +1,4 @@
-// Editor de PDF Master - Componentes de Interface
+// I Hate PDF - Componentes de Interface
 class UIComponents {
     constructor() {
         this.modals = {};

@@ -1,4 +1,4 @@
-/* Tema Escuro - Editor de PDF Master */
+/* Tema Escuro - I Hate PDF */
 
 :root {
     --primary-color: #3b82f6;
@@ -25,7 +25,6 @@
     --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
     
     --sidebar-width: 280px;
-    --sidebar-collapsed: 60px;
     --header-height: 60px;
 }
 
@@ -62,20 +61,17 @@ body {
     left: 0;
     height: 100vh;
     z-index: 1000;
-    transition: all 0.3s ease;
+    /* Sidebar com tamanho fixo */
     box-shadow: var(--shadow-medium);
 }
 
-.sidebar.collapsed {
-    width: var(--sidebar-collapsed);
-}
+/* Sidebar sempre mantém tamanho fixo */
 
 .sidebar-header {
     padding: 1rem;
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    justify-content: space-between;
     height: var(--header-height);
 }
 
@@ -83,12 +79,33 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.logo-container:hover {
+    background-color: var(--bg-hover);
+    transform: translateY(-1px);
+}
+
+.logo-container:active {
+    transform: translateY(0px);
+    background-color: var(--bg-tertiary);
 }
 
 .logo {
     width: 32px;
     height: 32px;
     border-radius: 6px;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
 }
 
 .app-title {
@@ -100,24 +117,9 @@ body {
     transition: opacity 0.3s ease;
 }
 
-.sidebar.collapsed .app-title {
-    opacity: 0;
-}
+/* Título sempre visível */
 
-.sidebar-toggle {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
-
-.sidebar-toggle:hover {
-    background-color: var(--bg-hover);
-    color: var(--primary-color);
-}
+/* Botão de toggle removido */
 
 /* Navigation */
 .sidebar-nav {
@@ -166,9 +168,7 @@ body {
     transition: opacity 0.3s ease;
 }
 
-.sidebar.collapsed .menu-header span {
-    opacity: 0;
-}
+/* Texto do menu sempre visível */
 
 .arrow {
     transition: transform 0.2s ease;
@@ -287,21 +287,17 @@ body {
     transition: opacity 0.3s ease;
 }
 
-.sidebar.collapsed .theme-toggle span {
-    opacity: 0;
-}
+/* Texto do theme toggle sempre visível */
 
 /* Main Content */
 .main-content {
     flex: 1;
     margin-left: var(--sidebar-width);
-    transition: margin-left 0.3s ease;
+    /* Margem fixa do main content */
     min-height: 100vh;
 }
 
-.sidebar.collapsed + .main-content {
-    margin-left: var(--sidebar-collapsed);
-}
+/* Main content sempre usa margem fixa */
 
 .content-area {
     padding: 2rem;
@@ -322,11 +318,11 @@ body {
     max-width: 500px;
 }
 
-.welcome-logo {
-    width: 80px;
-    height: 80px;
+.welcome-content img {
     margin-bottom: 1.5rem;
     border-radius: 12px;
+    max-width: 100%;
+    height: auto;
 }
 
 .welcome-content h2 {

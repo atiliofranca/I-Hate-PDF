@@ -1,6 +1,6 @@
 @echo off
 echo ====================================
-echo    Editor de PDF Master
+echo    I Hate PDF
 echo ====================================
 echo.
 echo Iniciando a aplicacao...

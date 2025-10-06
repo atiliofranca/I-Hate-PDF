@@ -1,8 +1,8 @@
-# Editor de PDF Master
+# I Hate PDF
 
 Uma aplicação web completa para edição, conversão e gerenciamento de arquivos PDF.
 
-![Editor de PDF Master](i-hate-pdf.png)
+![I Hate PDF](i-hate-pdf.png)
 
 ## 📋 Funcionalidades
 
@@ -48,7 +48,7 @@ Uma aplicação web completa para edição, conversão e gerenciamento de arquiv
 1. **Clone ou baixe o projeto**:
 ```bash
 git clone <repository-url>
-cd editor-pdf-master
+cd i-hate-pdf
 ```
 
 2. **Instale as dependências**:
@@ -118,7 +118,7 @@ A interface é totalmente responsiva e funciona em:
 ## 📁 Estrutura do Projeto
 
 ```
-editor-pdf-master/
+i-hate-pdf/
 ├── index.html                 # Página principal
 ├── package.json              # Dependências e scripts
 ├── exemplo.png               # Imagem de referência do layout
@@ -249,4 +249,4 @@ Para suporte ou dúvidas:
 
 ---
 
-**Editor de PDF Master** - Uma solução completa para todas as suas necessidades de PDF! 🚀
+**I Hate PDF** - Uma solução completa para todas as suas necessidades de PDF! 🚀

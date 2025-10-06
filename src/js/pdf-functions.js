@@ -1,4 +1,4 @@
-// Editor de PDF Master - Funções de Processamento PDF
+// I Hate PDF - Funções de Processamento PDF
 class PDFProcessor {
     constructor() {
         this.PDFLib = window.PDFLib;
