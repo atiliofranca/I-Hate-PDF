@@ -10,25 +10,195 @@ class PDFProcessor {
     /**
      * Juntar múltiplos PDFs em um único arquivo
      */
-    async juntarPDF(files) {
+    async juntarPDF(files, pageOrder = null) {
         try {
+            if (!files || files.length === 0) {
+                throw new Error('Nenhum arquivo fornecido');
+            }
+
             const mergedPdf = await this.PDFLib.PDFDocument.create();
             
-            for (const file of files) {
-                const arrayBuffer = await this.fileToArrayBuffer(file);
-                const pdf = await this.PDFLib.PDFDocument.load(arrayBuffer);
-                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+            if (pageOrder && pageOrder.length > 0) {
+                // Validar ordem das páginas
+                const validPages = pageOrder.filter(page => 
+                    page && 
+                    typeof page.fileIndex === 'number' && 
+                    typeof page.pageIndex === 'number' &&
+                    page.fileIndex >= 0 && 
+                    page.fileIndex < files.length &&
+                    page.pageIndex >= 0
+                );
                 
-                copiedPages.forEach((page) => mergedPdf.addPage(page));
+                if (validPages.length === 0) {
+                    throw new Error('Ordem de páginas inválida');
+                }
+                
+                // Cache de PDFs carregados para evitar recarregamento
+                const pdfCache = new Map();
+                
+                for (const pageInfo of validPages) {
+                    try {
+                        const file = files[pageInfo.fileIndex];
+                        
+                        let pdf;
+                        if (pdfCache.has(pageInfo.fileIndex)) {
+                            pdf = pdfCache.get(pageInfo.fileIndex);
+                        } else {
+                            const arrayBuffer = await this.fileToArrayBuffer(file);
+                            pdf = await this.PDFLib.PDFDocument.load(arrayBuffer);
+                            pdfCache.set(pageInfo.fileIndex, pdf);
+                        }
+                        
+                        // Verificar se a página existe
+                        if (pageInfo.pageIndex >= pdf.getPageCount()) {
+                            console.warn(`Página ${pageInfo.pageIndex} não existe no arquivo ${file.name}`);
+                            continue;
+                        }
+                        
+                        const [copiedPage] = await mergedPdf.copyPages(pdf, [pageInfo.pageIndex]);
+                        mergedPdf.addPage(copiedPage);
+                    } catch (pageError) {
+                        console.error(`Erro ao processar página:`, pageError);
+                        // Continue com as próximas páginas
+                    }
+                }
+            } else {
+                // Ordem padrão (arquivo por arquivo)
+                for (const file of files) {
+                    try {
+                        const arrayBuffer = await this.fileToArrayBuffer(file);
+                        const pdf = await this.PDFLib.PDFDocument.load(arrayBuffer);
+                        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                        
+                        copiedPages.forEach((page) => mergedPdf.addPage(page));
+                    } catch (fileError) {
+                        console.error(`Erro ao processar arquivo ${file.name}:`, fileError);
+                        // Continue com os próximos arquivos
+                    }
+                }
+            }
+            
+            if (mergedPdf.getPageCount() === 0) {
+                throw new Error('Nenhuma página foi processada com sucesso');
             }
             
             const pdfBytes = await mergedPdf.save();
             this.downloadFile(pdfBytes, 'pdfs_unidos.pdf', 'application/pdf');
             
-            return { success: true, message: 'PDFs unidos com sucesso!' };
+            return { success: true, message: `PDFs unidos com sucesso! ${mergedPdf.getPageCount()} página(s) processada(s).` };
         } catch (error) {
             console.error('Erro ao juntar PDFs:', error);
             return { success: false, message: 'Erro ao juntar PDFs: ' + error.message };
+        }
+    }
+
+    /**
+     * Extrair páginas como imagens para preview
+     */
+    async extractPDFPages(file) {
+        let loadingTask = null;
+        try {
+            const arrayBuffer = await this.fileToArrayBuffer(file);
+            
+            // Usar PDF.js para renderizar as páginas como canvas
+            loadingTask = pdfjsLib.getDocument({ 
+                data: arrayBuffer,
+                disableAutoFetch: true,
+                disableStream: true
+            });
+            
+            const pdf = await loadingTask.promise;
+            const pages = [];
+            
+            // Processar páginas em lotes para evitar sobrecarga de memória
+            const batchSize = 3;
+            for (let i = 1; i <= pdf.numPages; i += batchSize) {
+                const endIndex = Math.min(i + batchSize - 1, pdf.numPages);
+                const batchPromises = [];
+                
+                for (let j = i; j <= endIndex; j++) {
+                    batchPromises.push(this.renderPageThumbnail(pdf, j));
+                }
+                
+                const batchResults = await Promise.allSettled(batchPromises);
+                
+                batchResults.forEach((result, index) => {
+                    if (result.status === 'fulfilled' && result.value) {
+                        pages.push({
+                            pageIndex: (i + index) - 1,
+                            width: result.value.width,
+                            height: result.value.height,
+                            thumbnail: result.value.thumbnail,
+                            content: `Página ${i + index}`
+                        });
+                    } else {
+                        // Fallback para página com erro
+                        pages.push({
+                            pageIndex: (i + index) - 1,
+                            width: 100,
+                            height: 140,
+                            thumbnail: null,
+                            content: `Página ${i + index}`
+                        });
+                    }
+                });
+            }
+            
+            return pages;
+        } catch (error) {
+            console.error('Erro ao extrair páginas:', error);
+            return [];
+        } finally {
+            // Limpar recursos
+            if (loadingTask) {
+                try {
+                    loadingTask.destroy();
+                } catch (e) {
+                    console.warn('Erro ao limpar PDF.js task:', e);
+                }
+            }
+        }
+    }
+
+    /**
+     * Renderizar miniatura de uma página específica
+     */
+    async renderPageThumbnail(pdf, pageNumber) {
+        let canvas = null;
+        try {
+            const page = await pdf.getPage(pageNumber);
+            const scale = Math.min(120 / page.getViewport({ scale: 1 }).width, 0.3);
+            const viewport = page.getViewport({ scale });
+            
+            canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            
+            await page.render(renderContext).promise;
+            
+            const thumbnailDataUrl = canvas.toDataURL('image/png', 0.8);
+            
+            return {
+                width: viewport.width,
+                height: viewport.height,
+                thumbnail: thumbnailDataUrl
+            };
+        } catch (error) {
+            console.error(`Erro ao renderizar página ${pageNumber}:`, error);
+            return null;
+        } finally {
+            // Limpar canvas da memória
+            if (canvas) {
+                canvas.width = 0;
+                canvas.height = 0;
+                canvas = null;
+            }
         }
     }
 

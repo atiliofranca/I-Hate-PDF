@@ -583,7 +583,23 @@ window.processFunctionality = async function(functionalityId) {
         // Process based on functionality
         switch (functionalityId) {
             case 'juntarPDF':
-                result = await pdfProcessor.juntarPDF(files);
+                // Limpar estado antes de iniciar novo processo
+                uiComponents.resetGlobalState();
+                
+                // Show page reorder modal for juntar PDF
+                uiComponents.showPageReorderModal(files, async (pageOrder) => {
+                    try {
+                        result = await pdfProcessor.juntarPDF(files, pageOrder);
+                        handleProcessResult(result, functionalityId);
+                    } catch (error) {
+                        console.error('Erro ao juntar PDFs:', error);
+                        uiComponents.showNotification('Erro ao juntar PDFs: ' + error.message, 'error');
+                    } finally {
+                        // Garantir que o loading seja escondido
+                        uiComponents.hideLoading();
+                    }
+                });
+                return; // Exit here as modal will handle the rest
                 break;
                 
             case 'dividirPDF':
