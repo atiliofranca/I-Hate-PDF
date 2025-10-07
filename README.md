@@ -90,7 +90,7 @@ Docker oferece a melhor experiência - **Node.js já está incluído no containe
 3. Reinicie o computador se solicitado
 4. Abra o Docker Desktop e aguarde inicialização
 
-**Executando a aplicação:**
+**Executando a aplicação (Escolha uma dessas opções):**
 
 ```powershell
 # 1. Clone o projeto (PowerShell/CMD)
