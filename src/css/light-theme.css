@@ -1,3 +1,236 @@
+/* Sidebar e navegação */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-medium);
+    min-height: 100vh;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.app-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+.sidebar-nav {
+    flex: 1;
+    margin-top: 1rem;
+}
+.nav-menu {
+    list-style: none;
+    padding: 0;
+}
+.menu-item {
+    margin-bottom: 1rem;
+}
+.menu-header {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    width: 100%;
+    padding: 0.3rem 0;
+}
+.submenu {
+    list-style: none;
+    padding-left: 1.2rem;
+    margin-top: 0.3rem;
+}
+.submenu li {
+    margin-bottom: 0.2rem;
+}
+.submenu a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+.submenu a:hover {
+    background: var(--bg-hover);
+    color: var(--primary-hover);
+}
+/* Botões */
+.btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-primary {
+    background: var(--primary-color);
+    color: #fff;
+}
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+.btn-secondary {
+    background: var(--bg-hover);
+    color: var(--primary-color);
+}
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+/* Títulos */
+.functionality-title, .welcome-screen h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+.functionality-description, .welcome-screen p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+/* Responsividade */
+@media (max-width: 900px) {
+    .sidebar {
+        width: 100%;
+        min-width: unset;
+        box-shadow: none;
+    }
+    .app-container {
+        flex-direction: column;
+    }
+}
+/* Modal de dividir PDF - integração visual */
+.page-thumbnails-modal-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-height: 45vh;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+}
+.page-thumbnail-modal {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 110px;
+    min-width: 110px;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+.page-thumbnail-modal:hover {
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-color);
+}
+.page-thumb-label input[type="checkbox"] {
+    margin-bottom: 0.5rem;
+    accent-color: var(--primary-color);
+}
+.page-thumb-img {
+    width: 80px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+}
+.page-thumb-img img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.page-thumb-number {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+}
+/* Estilos para modal de dividir PDF com miniaturas */
+.split-pdf-modal-container {
+    padding: 1rem;
+}
+.split-pdf-instructions {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+.split-pdf-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    max-height: 45vh;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+}
+.split-page-thumb {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 110px;
+    min-width: 110px;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+.split-page-thumb:hover {
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-color);
+}
+.split-page-thumb input[type="checkbox"] {
+    margin-bottom: 0.5rem;
+    accent-color: var(--primary-color);
+}
+.thumb-img {
+    width: 80px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+}
+.thumb-img img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.thumb-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+}
 /* Tema Claro - I Hate PDF */
 
 :root {

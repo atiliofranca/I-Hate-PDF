@@ -603,12 +603,12 @@ window.processFunctionality = async function(functionalityId) {
                 break;
                 
             case 'dividirPDF':
-                // Show configuration modal for split options
-                uiComponents.showSplitPDFModal(async (options) => {
-                    result = await pdfProcessor.dividirPDF(files[0], options);
+                // Novo modal com miniaturas e seleção de páginas
+                uiComponents.showSplitPDFWithThumbnailsModal(files[0], async (selectedPages) => {
+                    result = await pdfProcessor.dividirPDF(files[0], { selectedPages });
                     handleProcessResult(result, functionalityId);
                 });
-                return; // Exit here as modal will handle the rest
+                return; // Exit here as modal vai lidar com o resto
                 
             case 'comprimirPDF':
                 result = await pdfProcessor.comprimirPDF(files);

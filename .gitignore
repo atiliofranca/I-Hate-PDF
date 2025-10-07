@@ -1,0 +1,422 @@
+# I Hate PDF - .gitignore
+# Arquivo para ignorar arquivos e diretórios desnecessários no Git
+
+# ========================================
+# Node.js
+# ========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# ========================================
+# Environment Variables
+# ========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.build
+
+# ========================================
+# Docker
+# ========================================
+# Docker volumes
+docker-volumes/
+
+# Docker logs
+docker-logs/
+
+# Docker temporary files
+.docker-tmp/
+
+# Docker build context (se houver)
+.dockerbuild/
+
+# ========================================
+# IDE and Editor Files
+# ========================================
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+.ionide/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Atom
+.atom/
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ========================================
+# Operating System Files
+# ========================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ========================================
+# Logs and Temporary Files
+# ========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+.nyc_output/
+
+# Grunt intermediate storage
+.grunt/
+
+# Bower dependency directory
+bower_components/
+
+# ========================================
+# Build and Distribution
+# ========================================
+# Build directories
+build/
+dist/
+out/
+
+# Webpack
+.webpack/
+
+# Parcel
+.cache/
+.parcel-cache/
+
+# Next.js
+.next/
+out/
+
+# Nuxt.js
+.nuxt/
+dist/
+
+# Gatsby
+.cache/
+public/
+
+# Vuepress
+.vuepress/dist/
+
+# Docusaurus
+.docusaurus/
+
+# Serverless
+.serverless/
+
+# ========================================
+# Package Managers
+# ========================================
+# Yarn
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# pnpm
+.pnpm-store/
+
+# ========================================
+# Testing
+# ========================================
+# Jest
+.jest/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# ========================================
+# Database
+# ========================================
+*.sqlite
+*.sqlite3
+*.db
+
+# ========================================
+# Certificates and Keys
+# ========================================
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# ========================================
+# Archives
+# ========================================
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ========================================
+# Backup Files
+# ========================================
+*.bak
+*.backup
+*.tmp
+*.temp
+*.old
+*.orig
+*.save
+
+# ========================================
+# Project Specific
+# ========================================
+# Arquivos de exemplo ou teste (se houver)
+/examples/temp/
+/test-files/
+/temp/
+
+# Arquivos de configuração local específicos
+config.local.js
+config.local.json
+
+# Uploads de usuário (se houver)
+/uploads/
+/user-files/
+
+# Cache de processamento PDF (se houver)
+/pdf-cache/
+/processing-cache/
+
+# ========================================
+# Documentation Build
+# ========================================
+# GitBook
+_book/
+
+# Sphinx
+_build/
+
+# MkDocs
+/site/
+
+# ========================================
+# Dependency Lock Files (Opcional)
+# ========================================
+# Descomente se quiser ignorar lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ========================================
+# Monorepo (se aplicável)
+# ========================================
+# Lerna
+lerna-debug.log*
+.lerna/
+
+# Rush
+.rush/
+
+# ========================================
+# Mobile Development (se aplicável)
+# ========================================
+# React Native
+.metro-health-check*
+
+# Cordova
+platforms/
+plugins/
+www/
+
+# ========================================
+# Analytics and Tracking
+# ========================================
+# Google Analytics
+google-analytics.json
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+
+# ========================================
+# Monitoring and APM
+# ========================================
+# Sentry
+.sentryclirc
+
+# New Relic
+newrelic.js
+
+# ========================================
+# Miscellaneous
+# ========================================
+# Thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac crap
+.DS_Store
+
+# ========================================
+# Project Documentation (Manter alguns)
+# ========================================
+# Manter arquivos de documentação importantes
+!README.md
+!DOCKER.md
+!QUICK_START.md
+!DOCKER_RESOLUTION.md
+!DOCS_INDEX.md
+
+# ========================================
+# Scripts (Manter)
+# ========================================
+# Manter scripts importantes
+!docker.sh
+!docker.ps1
+!setup.sh
+!fix-docker-permissions.sh

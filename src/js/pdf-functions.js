@@ -210,35 +210,30 @@ class PDFProcessor {
             const arrayBuffer = await this.fileToArrayBuffer(file);
             const pdf = await this.PDFLib.PDFDocument.load(arrayBuffer);
             const pageCount = pdf.getPageCount();
-            
-            const { startPage = 1, endPage = pageCount, separatePages = false } = options;
-            
-            if (separatePages) {
-                // Criar um PDF para cada página
-                for (let i = startPage - 1; i < endPage; i++) {
-                    const newPdf = await this.PDFLib.PDFDocument.create();
-                    const [copiedPage] = await newPdf.copyPages(pdf, [i]);
-                    newPdf.addPage(copiedPage);
-                    
-                    const pdfBytes = await newPdf.save();
-                    this.downloadFile(pdfBytes, `pagina_${i + 1}.pdf`, 'application/pdf');
-                }
+            const { selectedPages, startPage = 1, endPage = pageCount, separatePages = false } = options;
+
+            let pagesToExport = [];
+            if (Array.isArray(selectedPages) && selectedPages.length > 0) {
+                // Usar páginas selecionadas pelo usuário
+                pagesToExport = selectedPages.filter(i => i >= 0 && i < pageCount);
             } else {
-                // Criar um PDF com o intervalo especificado
-                const newPdf = await this.PDFLib.PDFDocument.create();
-                const pagesToCopy = [];
-                
+                // Fallback para intervalo
                 for (let i = startPage - 1; i < endPage; i++) {
-                    pagesToCopy.push(i);
+                    pagesToExport.push(i);
                 }
-                
-                const copiedPages = await newPdf.copyPages(pdf, pagesToCopy);
-                copiedPages.forEach((page) => newPdf.addPage(page));
-                
-                const pdfBytes = await newPdf.save();
-                this.downloadFile(pdfBytes, `paginas_${startPage}_a_${endPage}.pdf`, 'application/pdf');
             }
-            
+
+            if (pagesToExport.length === 0) {
+                throw new Error('Nenhuma página selecionada para exportar.');
+            }
+
+            // Criar novo PDF apenas com as páginas escolhidas
+            const newPdf = await this.PDFLib.PDFDocument.create();
+            const copiedPages = await newPdf.copyPages(pdf, pagesToExport);
+            copiedPages.forEach((page) => newPdf.addPage(page));
+            const pdfBytes = await newPdf.save();
+            this.downloadFile(pdfBytes, `pdf_dividido_paginas_${pagesToExport.map(i => i+1).join('_')}.pdf`, 'application/pdf');
+
             return { success: true, message: 'PDF dividido com sucesso!' };
         } catch (error) {
             console.error('Erro ao dividir PDF:', error);

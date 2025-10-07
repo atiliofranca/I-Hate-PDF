@@ -1,0 +1,25 @@
+services:
+  i-hate-pdf:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount do código para desenvolvimento (opcional)
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+    container_name: i-hate-pdf-app
+
+  # Versão de produção (sem volumes)
+  i-hate-pdf-prod:
+    build: .
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    container_name: i-hate-pdf-prod
+    profiles:
+      - production
