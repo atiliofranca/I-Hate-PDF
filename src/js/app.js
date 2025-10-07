@@ -247,6 +247,17 @@ class PDFMasterApp {
         const minFiles = config.minFiles || 1;
         const maxFiles = config.maxFiles || (config.allowMultiple ? 'ilimitado' : 1);
         
+        let quantidadeTexto = `${minFiles === maxFiles ? minFiles : `${minFiles} a ${maxFiles}`} arquivo(s)`;
+        // Padronização dos textos
+        if (functionalityId === 'juntarPDF') {
+            quantidadeTexto = '2 a ilimitados arquivos';
+        } else if (quantidadeTexto === '1 arquivo(s)') {
+            quantidadeTexto = '1 arquivo';
+        } else if (quantidadeTexto === '1 a ilimitado arquivo(s)') {
+            quantidadeTexto = '1 a ilimitados arquivos';
+        } else if (quantidadeTexto === '2 a ilimitado arquivo(s)') {
+            quantidadeTexto = '2 a ilimitados arquivos';
+        }
         return `
             <div class="functionality-header">
                 <h2 class="functionality-title">${config.title}</h2>
@@ -254,7 +265,7 @@ class PDFMasterApp {
                 <div class="functionality-rules">
                     <small class="text-muted">
                         <strong>Arquivos aceitos:</strong> ${acceptedFiles} • 
-                        <strong>Quantidade:</strong> ${minFiles === maxFiles ? minFiles : `${minFiles} a ${maxFiles}`} arquivo(s)
+                        <strong>Quantidade:</strong> ${quantidadeTexto}
                     </small>
                 </div>
             </div>
