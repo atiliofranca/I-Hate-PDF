@@ -103,7 +103,8 @@ class PDFMasterApp {
     }
 
     loadFunctionality(functionalityId) {
-        this.currentFunctionality = functionalityId;
+    this.currentFunctionality = functionalityId;
+    window.currentFunctionality = functionalityId;
         
         // Hide welcome screen and show functionality content
         document.getElementById('welcome-screen').style.display = 'none';
@@ -579,14 +580,11 @@ window.processFunctionality = async function(functionalityId) {
     
     try {
         let result;
-        
+
         // Process based on functionality
         switch (functionalityId) {
             case 'juntarPDF':
-                // Limpar estado antes de iniciar novo processo
                 uiComponents.resetGlobalState();
-                
-                // Show page reorder modal for juntar PDF
                 uiComponents.showPageReorderModal(files, async (pageOrder) => {
                     try {
                         result = await pdfProcessor.juntarPDF(files, pageOrder);
@@ -595,50 +593,66 @@ window.processFunctionality = async function(functionalityId) {
                         console.error('Erro ao juntar PDFs:', error);
                         uiComponents.showNotification('Erro ao juntar PDFs: ' + error.message, 'error');
                     } finally {
-                        // Garantir que o loading seja escondido
                         uiComponents.hideLoading();
                     }
                 });
-                return; // Exit here as modal will handle the rest
-                break;
-                
+                return;
+
+            case 'organizarPDF':
+                // Organizar PDF: apenas 1 arquivo, drag-and-drop das páginas
+                if (files.length !== 1) {
+                    uiComponents.showNotification('Selecione apenas 1 arquivo PDF para organizar.', 'error');
+                    return;
+                }
+                uiComponents.resetGlobalState();
+                uiComponents.showPageReorderModal(files, async (pageOrder) => {
+                    try {
+                        // Reutiliza a lógica de juntarPDF, mas só há um arquivo
+                        result = await pdfProcessor.juntarPDF(files, pageOrder);
+                        handleProcessResult(result, functionalityId);
+                    } catch (error) {
+                        console.error('Erro ao organizar PDF:', error);
+                        uiComponents.showNotification('Erro ao organizar PDF: ' + error.message, 'error');
+                    } finally {
+                        uiComponents.hideLoading();
+                    }
+                });
+                return;
+
             case 'dividirPDF':
-                // Novo modal com miniaturas e seleção de páginas
                 uiComponents.showSplitPDFWithThumbnailsModal(files[0], async (selectedPages) => {
                     result = await pdfProcessor.dividirPDF(files[0], { selectedPages });
                     handleProcessResult(result, functionalityId);
                 });
-                return; // Exit here as modal vai lidar com o resto
-                
+                return;
+
             case 'comprimirPDF':
                 result = await pdfProcessor.comprimirPDF(files);
                 break;
-                
+
             case 'marcaDagua':
-                // Show watermark configuration modal
                 uiComponents.showWatermarkModal(async (options) => {
                     result = await pdfProcessor.adicionarMarcaDagua(files[0], options);
                     handleProcessResult(result, functionalityId);
                 });
-                return; // Exit here as modal will handle the rest
-                
+                return;
+
             case 'numerosPagina':
-                // Show page numbers configuration modal
                 uiComponents.showPageNumbersModal(async (options) => {
                     result = await pdfProcessor.adicionarNumerosPagina(files[0], options);
                     handleProcessResult(result, functionalityId);
                 });
-                return; // Exit here as modal will handle the rest
-                
+                return;
+
             case 'jpgParaPDF':
                 const combineFiles = confirm('Deseja combinar todas as imagens em um único PDF? (Cancelar = arquivos separados)');
                 result = await pdfProcessor.jpgParaPDF(files, { combineFiles });
                 break;
-                
+
             case 'pdfParaJPG':
                 result = await pdfProcessor.pdfParaJPG(files[0]);
                 break;
-                
+
             case 'protegerPDF':
                 const password = prompt('Digite a senha para proteger o(s) PDF(s):');
                 if (!password) {
@@ -647,15 +661,14 @@ window.processFunctionality = async function(functionalityId) {
                 }
                 result = await pdfProcessor.protegerPDF(files, password);
                 break;
-                
+
             default:
-                // For not yet implemented functionalities, show simulation
                 result = await simulateProcessing(functionalityId);
                 break;
         }
-        
+
         handleProcessResult(result, functionalityId);
-        
+
     } catch (error) {
         console.error('Erro no processamento:', error);
         uiComponents.showNotification('Erro durante o processamento: ' + error.message, 'error');

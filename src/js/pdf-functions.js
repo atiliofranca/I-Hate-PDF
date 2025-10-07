@@ -83,9 +83,14 @@ class PDFProcessor {
             }
             
             const pdfBytes = await mergedPdf.save();
-            this.downloadFile(pdfBytes, 'pdfs_unidos.pdf', 'application/pdf');
+            // Detecta se é Organizar PDF pelo contexto global
+            let fileName = 'pdfs_unidos.pdf';
+            if (window.currentFunctionality === 'organizarPDF') {
+                fileName = 'pdf_organizado.pdf';
+            }
+            this.downloadFile(pdfBytes, fileName, 'application/pdf');
             
-            return { success: true, message: `PDFs unidos com sucesso! ${mergedPdf.getPageCount()} página(s) processada(s).` };
+            return { success: true, message: `PDF exportado com sucesso! ${mergedPdf.getPageCount()} página(s) processada(s).` };
         } catch (error) {
             console.error('Erro ao juntar PDFs:', error);
             return { success: false, message: 'Erro ao juntar PDFs: ' + error.message };
