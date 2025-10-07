@@ -50,18 +50,21 @@ Uma aplicação web completa para edição, conversão e gerenciamento de arquiv
 #### 🐳 **Método 1: Docker (Recomendado) - Sem Instalações Complexas**
 
 **✅ Vantagens:**
+
 - ✅ **Não precisa instalar Node.js** na sua máquina
 - ✅ **Funciona em qualquer OS** (Windows, Linux, macOS)
 - ✅ **Ambiente isolado** - não interfere com outras aplicações
 - ✅ **Setup em 30 segundos** - apenas Docker necessário
 
 **📋 Únicos Pré-requisitos:**
+
 - Navegador web moderno (Chrome, Firefox, Safari, Edge)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado
 
 #### 📦 **Método 2: Instalação Manual - Para Desenvolvedores**
 
 **⚠️ Requisitos Adicionais:**
+
 - Navegador web moderno (Chrome, Firefox, Safari, Edge)
 - **Node.js 16+** (apenas se não usar Docker)
 - **npm/yarn** (gerenciador de pacotes)
@@ -97,11 +100,11 @@ Docker oferece a melhor experiência - **Node.js já está incluído no containe
 git clone <repository-url>
 cd i-hate-pdf
 
-# 2. Método 1: Script PowerShell (se disponível)
-.\docker.ps1 dev
-
-# 3. Método 2: Docker Compose (recomendado para Windows)
+# 2. Método 1: Docker Compose (recomendado para Windows)
 docker-compose up --build
+
+# 3. Método 2Script PowerShell (se disponível)
+.\docker.ps1 dev
 
 # 4. Método 3: Comandos individuais
 docker build -t i-hate-pdf .
@@ -332,6 +335,7 @@ docker-compose down
 **⚠️ ATENÇÃO**: Este método requer **Node.js instalado** na sua máquina. Se preferir não instalar Node.js, use o método Docker acima.
 
 **📋 Pré-requisitos Obrigatórios:**
+
 - Node.js 16+ instalado localmente
 - npm ou yarn
 - Git
@@ -339,21 +343,24 @@ docker-compose down
 **🔧 Passos de Instalação:**
 
 1. **Instale Node.js** (se ainda não tiver):
+
    - **Windows/macOS**: https://nodejs.org/
    - **Linux**: `sudo apt install nodejs npm` (Ubuntu/Debian)
-
 2. **Clone o projeto**:
+
 ```bash
 git clone <repository-url>
 cd i-hate-pdf
 ```
 
 3. **Instale as dependências**:
+
 ```bash
 npm install
 ```
 
 4. **Execute o servidor local**:
+
 ```bash
 npm start
 ```
@@ -366,19 +373,20 @@ npm start
 
 ## 🤔 Docker vs Instalação Manual - Qual Escolher?
 
-| Aspecto | 🐳 Docker | 📦 Manual |
-|---------|-----------|-----------|
-| **Node.js necessário** | ❌ **NÃO precisa instalar** | ✅ **Deve instalar Node.js 16+** |
-| **Setup time** | ⚡ ~30 segundos | ⏱️ ~5-10 minutos |
-| **Funciona em** | 🌍 Windows, macOS, Linux | 🌍 Windows, macOS, Linux |
-| **Isolamento** | ✅ **Totalmente isolado** | ❌ Pode conflitar com outros projetos |
-| **Atualizações** | ✅ **Automáticas no container** | ❌ Manual (Node.js, npm, etc.) |
-| **Deploy** | ✅ **Igual em qualquer lugar** | ❌ Depende da máquina |
-| **Primeira vez** | 🐳 **Recomendado para todos** | 💻 **Apenas para devs experientes** |
+| Aspecto                       | 🐳 Docker                             | 📦 Manual                                |
+| ----------------------------- | ------------------------------------- | ---------------------------------------- |
+| **Node.js necessário** | ❌**NÃO precisa instalar**     | ✅**Deve instalar Node.js 16+**    |
+| **Setup time**          | ⚡ ~30 segundos                       | ⏱️ ~5-10 minutos                       |
+| **Funciona em**         | 🌍 Windows, macOS, Linux              | 🌍 Windows, macOS, Linux                 |
+| **Isolamento**          | ✅**Totalmente isolado**        | ❌ Pode conflitar com outros projetos    |
+| **Atualizações**      | ✅**Automáticas no container** | ❌ Manual (Node.js, npm, etc.)           |
+| **Deploy**              | ✅**Igual em qualquer lugar**   | ❌ Depende da máquina                   |
+| **Primeira vez**        | 🐳**Recomendado para todos**    | 💻**Apenas para devs experientes** |
 
 ### 🎯 **Recomendação:**
 
 #### 👥 **Para Usuários/Testadores:**
+
 ```bash
 # Use Docker - simples e rápido!
 docker-compose up --build
@@ -386,6 +394,7 @@ docker-compose up --build
 ```
 
 #### 👨‍💻 **Para Desenvolvedores:**
+
 ```bash
 # Docker ainda é recomendado (ambiente consistente)
 ./docker.sh dev
@@ -465,11 +474,10 @@ i-hate-pdf/
 │   ├── Dockerfile            # Definição da imagem Docker
 │   ├── docker-compose.yml    # Orquestração de containers
 │   ├── .dockerignore         # Arquivos ignorados no build
-│   ├── docker.sh            # Script helper para Linux/macOS
-│   ├── docker.ps1           # Script helper para Windows
-│   ├── setup.sh             # Script de verificação inicial
-│   ├── DOCKER.md            # Documentação completa Docker
-│   └── QUICK_START.md       # Guia rápido por sistema operacional
+│   ├── Dockerfile            # Definição da imagem Docker
+│   ├── docker-compose.yml    # Orquestração de containers
+│   ├── .dockerignore         # Arquivos ignorados no build
+│   └── DOCKER_RESOLUTION.md  # Resolução de problemas específicos encontrados
 ├── src/
 │   ├── css/
 │   │   ├── light-theme.css   # Tema claro
@@ -489,8 +497,7 @@ i-hate-pdf/
 | `Dockerfile`         | Define como construir a imagem   | Build automático    |
 | `docker-compose.yml` | Configuração de serviços      | Orquestração       |
 | `.dockerignore`      | Arquivos excluídos do build     | Otimização         |
-| `docker.sh`          | Script helper Linux/macOS        | `./docker.sh dev`  |
-| `docker.ps1`         | Script helper Windows            | `.\docker.ps1 dev` |
+| `DOCKER_RESOLUTION.md` | Resolução de problemas específicos encontrados | `cat DOCKER_RESOLUTION.md` |
 | `setup.sh`           | Verificação de pré-requisitos | `./setup.sh`       |
 | `DOCKER.md`          | Documentação detalhada         | Referência completa |
 | `QUICK_START.md`     | Guia rápido por OS              | Início em 30s       |
