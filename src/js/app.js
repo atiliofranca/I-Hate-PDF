@@ -127,8 +127,8 @@ class PDFMasterApp {
                 outputBehavior: 'separate'
             },
             juntarPDF: {
-                title: 'Juntar PDF',
-                description: 'Mesclar e juntar PDFs e colocá-los em qualquer ordem que desejar.',
+                title: 'Juntar PDFs',
+                description: 'Mescle e junte dois ou mais PDFs e coloque-os na ordem que desejar.',
                 allowMultiple: true,
                 minFiles: 2,
                 outputBehavior: 'combined'
@@ -395,19 +395,21 @@ class PDFMasterApp {
     handleFileSelection(files, functionalityId) {
         if (files.length === 0) return;
         
+        // Validação para Juntar PDFs: mínimo 2 arquivos
+        if (functionalityId === 'juntarPDF' && files.length < 2) {
+            uiComponents.showNotification('Selecione pelo menos 2 arquivos PDF para juntar.', 'error');
+            return;
+        }
         // Show file list
         document.getElementById(`file-list-${functionalityId}`).style.display = 'block';
         document.getElementById(`upload-area-${functionalityId}`).style.display = 'none';
-        
         // Add files to container
         const container = document.getElementById(`files-container-${functionalityId}`);
         container.innerHTML = '';
-        
         Array.from(files).forEach((file, index) => {
             const fileItem = this.createFileItem(file, index, functionalityId);
             container.appendChild(fileItem);
         });
-        
         // Store files for processing
         window[`selectedFiles_${functionalityId}`] = files;
     }
