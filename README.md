@@ -2,7 +2,9 @@
 
 Uma aplicação web completa para edição, conversão e gerenciamento de arquivos PDF.
 
-![I Hate PDF](i-hate-pdf.png)
+<p align="center">
+<img src="i-hate-pdf.png" alt="Logo da Aplicação">
+</p>
 
 ## 📋 Funcionalidades
 
