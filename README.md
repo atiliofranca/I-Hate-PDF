@@ -1,6 +1,6 @@
 # I Hate PDF
 
-Uma aplicação web completa para edição, conversão e gerenciamento de arquivos PDF.
+Uma aplicação completa para edição, conversão e gerenciamento de arquivos PDF.
 
 <p align="center">
 <img src="i-hate-pdf.png" alt="Logo da Aplicação">
