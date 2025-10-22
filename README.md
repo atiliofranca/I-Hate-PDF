@@ -99,7 +99,7 @@ Docker oferece a melhor experiência - **Node.js já está incluído no containe
 
 ```powershell
 # 1. Clone o projeto (PowerShell/CMD)
-git clone <repository-url>
+git clone https://github.com/atiliofranca/I-Hate-PDF.git
 cd i-hate-pdf
 
 # 2. Método 1: Docker Compose (recomendado para Windows)
@@ -149,7 +149,7 @@ sudo systemctl enable docker
 
 ```bash
 # 1. Clone o projeto
-git clone <repository-url>
+git clone https://github.com/atiliofranca/I-Hate-PDF.git
 cd i-hate-pdf
 
 # 2. Tornar script executável
@@ -192,7 +192,7 @@ sudo chmod 666 /var/run/docker.sock
 
 ```bash
 # 1. Clone o projeto (Terminal)
-git clone <repository-url>
+git clone https://github.com/atiliofranca/I-Hate-PDF.git
 cd i-hate-pdf
 
 # 2. Tornar script executável
